@@ -16,10 +16,10 @@ import java.awt.image.BufferedImage;
  */
 public class Player extends Entity{
     KeyHandler keyH;
-
     public final int screenX; // координата игрока по оси Х
     public final int screenY; // координата игрока по оси Y
     int hasKey = 0;
+    private long startTime = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
 
@@ -60,12 +60,19 @@ public class Player extends Entity{
         straight = setup("/player/player_straight");
         up1 = setup("/player/player_up_1");
         up2 = setup("/player/player_up_2");
+        //up3 = setup("/player/player_up_1");
         down1 = setup("/player/player_down_1");
         down2 = setup("/player/player_down_2");
+        down3 = setup("/player/player_down_3");
         left1 = setup("/player/player_left_1");
         left2 = setup("/player/player_left_2");
+        left3 = setup("/player/player_left_3");
         right1 = setup("/player/player_right_1");
         right2 = setup("/player/player_right_2");
+        //right3 = setup("/player/player_right_3");
+        sleep1 = setup("/player/player_sleep_1");
+        sleep2 = setup("/player/player_sleep_2");
+        sleep3 = setup("/player/player_sleep_3");
     }
 
     /**
@@ -74,6 +81,7 @@ public class Player extends Entity{
     public void update() {
 
         if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed || keyH.ePressed) {
+            startTime = System.nanoTime();
 
             if(keyH.upPressed) {
                 direction = "up";
@@ -125,6 +133,12 @@ public class Player extends Entity{
                 if(spriteNum == 1) {
                     spriteNum = 2;
                 } else if (spriteNum == 2) {
+                    spriteNum = 3;
+                }
+                else if (spriteNum == 3) {
+                    spriteNum = 4;
+                }
+                else if (spriteNum == 4) {
                     spriteNum = 1;
                 }
                 spriteCounter = 0;
@@ -192,9 +206,7 @@ public class Player extends Entity{
         BufferedImage image = null;
 
         switch (direction) {
-            case "straight" -> {
-                image = straight;
-            }
+            case "straight" -> image = straight;
             case "up" -> {
                 if (spriteNum == 1) {
                     image = up1;
@@ -202,12 +214,24 @@ public class Player extends Entity{
                 if (spriteNum == 2) {
                     image = up2;
                 }
+                if (spriteNum == 3) {
+                    image = up1; // up3 do not exist right now
+                }
+                if (spriteNum == 4) {
+                    image = up2; // up3 do not exist right now
+                }
             }
             case "down" -> {
                 if (spriteNum == 1) {
                     image = down1;
                 }
                 if (spriteNum == 2) {
+                    image = down2;
+                }
+                if (spriteNum == 3) {
+                    image = down3;
+                }
+                if (spriteNum == 4) {
                     image = down2;
                 }
             }
@@ -218,6 +242,12 @@ public class Player extends Entity{
                 if (spriteNum == 2) {
                     image = left2;
                 }
+                if (spriteNum == 3) {
+                    image = left1;
+                }
+                if (spriteNum == 4) {
+                    image = left2;
+                }
             }
             case "right" -> {
                 if (spriteNum == 1) {
@@ -226,6 +256,31 @@ public class Player extends Entity{
                 if (spriteNum == 2) {
                     image = right2;
                 }
+                if (spriteNum == 3) {
+                    image = right1;
+                }
+                if (spriteNum == 4) {
+                    image = right2;
+                }
+            }
+        }
+
+        // afk sleep animation
+        long endTime = 0;
+        if(startTime > 0) {
+            endTime = (System.nanoTime() - startTime) / 1000000000;
+        }
+        System.out.println(endTime);
+
+        if(endTime == 10) {
+            image = straight;
+        } else if (endTime == 11 || endTime == 12) {
+            image = sleep1;
+        } else if (endTime >= 13) {
+            if(endTime % 2 == 1) {
+                image = sleep2;
+            } else {
+                image = sleep3;
             }
         }
 

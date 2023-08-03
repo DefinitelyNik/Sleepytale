@@ -17,7 +17,7 @@ public class Entity {
     GamePanel gp;
     public int worldX, worldY; // Координаты игрока на карте
     public int speed; // Скорость передвижения игрока по карте
-    public BufferedImage straight, up1, up2, down1, down2, left1, left2, right1, right2; // Переменнные, отвечающие за направление движения игрока
+    public BufferedImage straight, up1, up2, up3, down1, down2, down3, left1, left2, left3, right1, right2, right3, sleep1, sleep2, sleep3; // Переменнные, отвечающие за направление движения игрока
     public String direction = "straight"; // Направление движения игрока
     public int spriteCounter = 0; // Переменная для отрисовки анимации передвижения сущностей
     public int spriteNum = 1; // Переменная для отрисовки анимации передвижения сущностей
@@ -165,7 +165,7 @@ public class Entity {
 
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + ".png")));
-            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+            image = uTool.scaleImage(image, gp.tileSize * 2, gp.tileSize * 2);
         }catch (IOException e) {
             e.printStackTrace();
         }
