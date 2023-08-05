@@ -10,9 +10,9 @@ import org.game.GamePanel;
  * По сути, это ключ, который должен лежать где-то на карте.
  * Его может поднять игрок для открытия дверей или сундуков
  */
-public class OBJ_Key extends Entity {
+public class Key extends Entity {
 
-    public OBJ_Key(GamePanel gp) {
+    public Key(GamePanel gp) {
         super(gp);
 
         name = "Key";

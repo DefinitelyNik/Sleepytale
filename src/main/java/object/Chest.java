@@ -9,9 +9,9 @@ import org.game.GamePanel;
  * Устанавливает картинку объекта и масштабирует ее при помощи uTool'а
  * По сути, это обычный сундук, который должен стоять где-то на карте и хранить что-то в себе
  */
-public class OBJ_Chest extends Entity {
+public class Chest extends Entity {
 
-    public OBJ_Chest(GamePanel gp) {
+    public Chest(GamePanel gp) {
 
         super(gp);
 

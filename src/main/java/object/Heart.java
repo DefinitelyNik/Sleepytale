@@ -10,9 +10,9 @@ import org.game.GamePanel;
  * У здоровья есть 3 картинки(пустое сердце, половинка сердца, полное сердце)
  * По сути, это здоровье игрока, которое отображается на экране
  */
-public class OBJ_Heart extends Entity {
+public class Heart extends Entity {
 
-    public OBJ_Heart(GamePanel gp) {
+    public Heart(GamePanel gp) {
 
         super(gp);
 

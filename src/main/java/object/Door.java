@@ -9,10 +9,10 @@ import org.game.GamePanel;
  * Устанавливает картинку объекта и масштабирует ее при помощи uTool'а
  * По сути, это обычная дверь, которая стоит на карте и изчезает, если к ней подходит игрок с ключом
  */
-public class OBJ_Door extends Entity
+public class Door extends Entity
 {
 
-    public OBJ_Door(GamePanel gp) {
+    public Door(GamePanel gp) {
 
         super(gp);
 
