@@ -7,7 +7,6 @@ import tile.TileManager;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 /**
@@ -137,14 +136,21 @@ public class GamePanel extends JPanel implements Runnable {
             player.update();
 
             // Обновляем npc
-            for (Entity entity : npc)
-                if (entity != null) {
-                    entity.update();
+            for(int i = 0; i < npc.length; i++) {
+                if(npc[i] != null) {
+                    npc[i].update();
                 }
+            }
+
             //Обновляем монстров
-            for (Entity entity : monster)
-                if (entity != null) {
-                    entity.update();
+            for(int i = 0; i < monster.length; i++)
+                if (monster[i] != null) {
+                    if (monster[i].alive && !monster[i].dying) {
+                        monster[i].update();
+                    }
+                    if (!monster[i].alive) {
+                        monster[i] = null;
+                    }
                 }
         }
         if(gameState == pauseState) {
