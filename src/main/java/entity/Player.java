@@ -73,7 +73,7 @@ public class Player extends Entity{
         left3 = setup("/player/player_left_3", gp.tileSize, gp.tileSize);
         right1 = setup("/player/player_right_1", gp.tileSize, gp.tileSize);
         right2 = setup("/player/player_right_2", gp.tileSize, gp.tileSize);
-        //right3 = setup("/player/player_right_3", gp.tileSize, gp.tileSize);
+        right3 = setup("/player/player_right_3", gp.tileSize, gp.tileSize);
         sleep1 = setup("/player/player_sleep_1", gp.tileSize, gp.tileSize);
         sleep2 = setup("/player/player_sleep_2", gp.tileSize, gp.tileSize);
         sleep3 = setup("/player/player_sleep_3", gp.tileSize, gp.tileSize);
@@ -292,7 +292,7 @@ public class Player extends Entity{
                     if (spriteNum == 1) {image = up1;}
                     if (spriteNum == 2) {image = up2;}
                     if (spriteNum == 3) {image = up1;} // up3 do not exist right now
-                    if (spriteNum == 4) {image = up2;} // up3 do not exist right now
+                    if (spriteNum == 4) {image = up2;}
                 }
                 if(attacking) {
                     tempScreenY = screenY - gp.tileSize;
@@ -316,7 +316,7 @@ public class Player extends Entity{
                 if(!attacking) {
                     if (spriteNum == 1) {image = left1;}
                     if (spriteNum == 2) {image = left2;}
-                    if (spriteNum == 3) {image = left1;}
+                    if (spriteNum == 3) {image = left3;}
                     if (spriteNum == 4) {image = left2;}
                 }
                 if(attacking) {
@@ -329,7 +329,7 @@ public class Player extends Entity{
                 if(!attacking) {
                     if (spriteNum == 1) {image = right1;}
                     if (spriteNum == 2) {image = right2;}
-                    if (spriteNum == 3) {image = right1;}
+                    if (spriteNum == 3) {image = right3;}
                     if (spriteNum == 4) {image = right2;}
                 }
                 if(attacking) {
