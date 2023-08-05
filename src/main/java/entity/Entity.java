@@ -55,9 +55,8 @@ public class Entity {
         this.gp = gp;
     }
 
-    public void setAction() {
-
-    }
+    public void setAction() {}
+    public void damageReaction() {}
 
     /**
      * Метод, позволяющий сущностям говорить
