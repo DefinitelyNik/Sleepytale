@@ -115,10 +115,8 @@ public class Player extends Entity{
             // Проверка ивентов
             gp.eHandler.checkEvent();
 
-            gp.keyH.ePressed = false;
-
             // Если коллизии нет, игрок может двигаться
-            if(!collisionOn) {
+            if(!collisionOn && !keyH.ePressed) {
                 switch (direction) {
                     case "up" -> worldY -= speed;
                     case "down" -> worldY += speed;
@@ -126,6 +124,8 @@ public class Player extends Entity{
                     case "right" -> worldX += speed;
                 }
             }
+
+            gp.keyH.ePressed = false;
 
             // Выбор анимации модельки игрока
             spriteCounter++;
@@ -270,7 +270,7 @@ public class Player extends Entity{
         if(startTime > 0) {
             endTime = (System.nanoTime() - startTime) / 1000000000;
         }
-        System.out.println(endTime);
+        //System.out.println(endTime);
 
         if(endTime == 10) {
             image = straight;
