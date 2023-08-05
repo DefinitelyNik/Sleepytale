@@ -15,28 +15,36 @@ import java.util.Objects;
  */
 public class Entity {
     GamePanel gp;
-    public int worldX, worldY; // Координаты игрока на карте
-    public int speed; // Скорость передвижения игрока по карте
-    public BufferedImage straight, up1, up2, up3, down1, down2, down3, left1, left2, left3, right1, right2, right3, sleep1, sleep2, sleep3; // Переменнные, отвечающие за направление движения игрока
-    public String direction = "straight"; // Направление движения игрока
-    public int spriteCounter = 0; // Переменная для отрисовки анимации передвижения сущностей
-    public int spriteNum = 1; // Переменная для отрисовки анимации передвижения сущностей
-    public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // Область коллизии сущности(Квадрат, размер которого меньше, чем размер модели сущности)
-    public int solidAreaDefaultX, solidAreaDefaultY;
-    public boolean collisionOn = false; // Есть коллизия или нет
-    public int actionLockCounter = 0; // Переменная, которая нужна для того, чтобы сущности не совершали миллион действий в секунду(что-то типа задержки между действиями)
-    public boolean invincible = false;
-    public int invincibleCounter = 0;
-    String[] dialogues = new String[20];
-    int dialogueIndex = 0;
-
-    //Объекты
+    public BufferedImage straight, up1, up2, up3, down1, down2, down3,
+            left1, left2, left3, right1, right2, right3, // Переменные, отвечающие за направление игрока
+            sleep1, sleep2, sleep3; // Переменнные, отвечающие за анимацию сна
+    public BufferedImage attackUp1, attackUp2, attackDown1, attackDown2,
+            attackLeft1, attackLeft2, attackRight1, attackRight2;
     public BufferedImage image, image2, image3;
-    public String name;
-    public boolean collision = false;
-    public int type; // 0 = игрок, 1 = npc, 2 = монстр
+    public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // Область коллизии сущности(Квадрат, размер которого меньше, чем размер модели сущности)
+    public Rectangle attackArea = new Rectangle(0,0,0,0);
+    public int solidAreaDefaultX, solidAreaDefaultY;
+    public boolean collision = false; // Переменная, указывающая на то, есть ли коллизия или нет
+    String[] dialogues = new String[20];
 
-    //Статус персонажа
+    //Состояние сущности
+    public int worldX, worldY; // Координаты сущности на карте
+    public String direction = "straight"; // Направление движения сущности(по дефолту сущность смотрит прямо)
+    public int spriteNum = 1; // Переменная для отрисовки анимации передвижения сущностей
+    int dialogueIndex = 0;
+    public boolean collisionOn = false; // Переменная, которая нужна для проверки коллизии
+    public boolean invincible = false; // Переменная, указывающая на то, неузвим ли игрок или нет
+    boolean attacking = false;
+
+    //Счетчики
+    public int spriteCounter = 0; // Переменная для отрисовки анимации передвижения сущностей
+    public int actionLockCounter = 0; // Переменная, которая нужна для того, чтобы сущности не совершали миллион действий в секунду(что-то типа задержки между действиями)
+    public int invincibleCounter = 0; // Переменная, которая нужна для отключения состояния неуязвимости игрока
+
+    //Атрибуты сущностей
+    public int type; // 0 = игрок, 1 = npc, 2 = монстр
+    public String name;
+    public int speed; // Скорость передвижения игрока по карте
     public int maxLife;
     public int life;
 
@@ -105,6 +113,14 @@ public class Entity {
             }
             spriteCounter = 0;
         }
+
+        if(invincible) {
+            invincibleCounter++;
+            if(invincibleCounter > 40) {
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
     }
 
     public void draw(Graphics2D g2) {
@@ -119,53 +135,41 @@ public class Entity {
 
             switch (direction) {
                 case "up" -> {
-                    if (spriteNum == 1) {
-                        image = up1;
-                    }
-                    if (spriteNum == 2) {
-                        image = up2;
-                    }
+                    if (spriteNum == 1) {image = up1;}
+                    if (spriteNum == 2) {image = up2;}
                 }
                 case "down" -> {
-                    if (spriteNum == 1) {
-                        image = down1;
-                    }
-                    if (spriteNum == 2) {
-                        image = down2;
-                    }
+                    if (spriteNum == 1) {image = down1;}
+                    if (spriteNum == 2) {image = down2;}
                 }
                 case "left" -> {
-                    if (spriteNum == 1) {
-                        image = left1;
-                    }
-                    if (spriteNum == 2) {
-                        image = left2;
-                    }
+                    if (spriteNum == 1) {image = left1;}
+                    if (spriteNum == 2) {image = left2;}
                 }
                 case "right" -> {
-                    if (spriteNum == 1) {
-                        image = right1;
-                    }
-                    if (spriteNum == 2) {
-                        image = right2;
-                    }
+                    if (spriteNum == 1) {image = right1;}
+                    if (spriteNum == 2) {image = right2;}
                 }
             }
 
+            if(invincible) g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         }
     }
 
     /**
      * Настройка изображения модели сущности(масштабирование)
      */
-    public BufferedImage setup(String imagePath) {
+    public BufferedImage setup(String imagePath, int width, int height) {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
 
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + ".png")));
-            image = uTool.scaleImage(image, gp.tileSize * 2, gp.tileSize * 2);
+            image = uTool.scaleImage(image, width, height);
         }catch (IOException e) {
             e.printStackTrace();
         }
