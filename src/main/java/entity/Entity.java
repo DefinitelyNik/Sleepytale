@@ -20,21 +20,21 @@ public class Entity {
             sleep1, sleep2, sleep3; // Переменнные, отвечающие за анимацию сна
     public BufferedImage attackUp1, attackUp2, attackDown1, attackDown2,
             attackLeft1, attackLeft2, attackRight1, attackRight2;
-    public BufferedImage image, image2, image3;
+    public BufferedImage image, image2, image3; // Картинки для отрисовки сердечек
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // Область коллизии сущности(Квадрат, размер которого меньше, чем размер модели сущности)
     public Rectangle attackArea = new Rectangle(0,0,0,0);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collision = false; // Переменная, указывающая на то, есть ли коллизия или нет
-    String[] dialogues = new String[20];
+    String[] dialogues = new String[20]; // Общее кол-во диалогов
 
     //Состояние сущности
     public int worldX, worldY; // Координаты сущности на карте
     public String direction = "straight"; // Направление движения сущности(по дефолту сущность смотрит прямо)
     public int spriteNum = 1; // Переменная для отрисовки анимации передвижения сущностей
-    int dialogueIndex = 0;
+    int dialogueIndex = 0; // Переменная, отвечающая за номер реплики в диалоге
     public boolean collisionOn = false; // Переменная, которая нужна для проверки коллизии
     public boolean invincible = false; // Переменная, указывающая на то, неузвим ли игрок или нет
-    boolean attacking = false;
+    boolean attacking = false; // Переменная, указывающая на то, атакует ли игрок или нет
 
     //Счетчики
     public int spriteCounter = 0; // Переменная для отрисовки анимации передвижения сущностей
@@ -43,10 +43,10 @@ public class Entity {
 
     //Атрибуты сущностей
     public int type; // 0 = игрок, 1 = npc, 2 = монстр
-    public String name;
+    public String name; // Имя объекта или монстра, или npc
     public int speed; // Скорость передвижения игрока по карте
-    public int maxLife;
-    public int life;
+    public int maxLife; // Максимальное кол-во здоровья у монстра или игрока
+    public int life; // Текущее кол-во здоровья
 
     public Entity(GamePanel gp) {
         this.gp = gp;
