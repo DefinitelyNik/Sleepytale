@@ -20,6 +20,7 @@ public class Player extends Entity{
     public final int screenY; // координата игрока по оси Y
     int hasKey = 0;
     private long startTime = 0;
+    public boolean attackCanceled = false;
 
     public Player(GamePanel gp, KeyHandler keyH) {
 
@@ -143,6 +144,12 @@ public class Player extends Entity{
                 }
             }
 
+            if(keyH.ePressed && !attackCanceled) {
+                attacking = true;
+                spriteCounter = 0;
+            }
+
+            attackCanceled = false;
             gp.keyH.ePressed = false;
 
             // Выбор анимации модельки игрока
@@ -255,10 +262,9 @@ public class Player extends Entity{
 
         if(gp.keyH.ePressed) {
             if(i != 999) {
+                attackCanceled = true;
                 gp.gameState = gp.dialogueState;
                 gp.npc[i].speak();
-            } else {
-                attacking = true;
             }
         }
     }
