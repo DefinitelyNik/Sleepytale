@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * Абстрактный класс для любый сущностей(игрок, монстр и т.д.)
- * Содержит данные о всех сущностях в игре, включая игрока
+ * Абстрактный класс для любый сущностей(игрок, монстр и т.д.).
+ * Содержит данные о всех сущностях в игре, включая игрока.
  */
 public class Entity {
     GamePanel gp;
@@ -55,13 +55,21 @@ public class Entity {
         this.gp = gp;
     }
 
+    /**
+     * Метод, задающий поведение мобу или npc.
+     * По сути, это ИИ любого существа в игре.
+     */
     public void setAction() {}
+
+    /**
+     * Метод, устанавливающий поведение моба, если тот получит урон.
+     */
     public void damageReaction() {}
 
     /**
-     * Метод, позволяющий сущностям говорить
-     * По сути, он просто поочередно меняет строки диалога
-     * Также меняет направление сущности в сторону игрока
+     * Метод, позволяющий сущностям говорить.
+     * По сути, он просто поочередно меняет строки диалога.
+     * Также меняет направление сущности в сторону игрока.
      */
     public void speak() {
 
@@ -163,6 +171,10 @@ public class Entity {
         }
     }
 
+    /**
+     * Метод, создающий анимацию смерти сущности.
+     * Пока что анимация заключается в простом мигании сущности.
+     */
     public void dyingAnimation(Graphics2D g2) {
         dyingCounter++;
 
@@ -198,12 +210,16 @@ public class Entity {
         }
     }
 
+    /**
+     * Вспомогательный метод для метода dyingAnimation.
+     */
     public void changeAlpha(Graphics2D g2, float alphaValue) {
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
     }
 
     /**
-     * Настройка изображения модели сущности(масштабирование)
+     * Настройка изображения модели сущности.
+     * В настройку входит масштабирование и чтение картинки.
      */
     public BufferedImage setup(String imagePath, int width, int height) {
         UtilityTool uTool = new UtilityTool();
