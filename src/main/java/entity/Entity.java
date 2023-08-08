@@ -44,12 +44,25 @@ public class Entity {
     public int invincibleCounter = 0; // Переменная, которая нужна для отключения состояния неуязвимости игрока
     int dyingCounter = 0;
 
-    //Атрибуты сущностей
+    //Атрибуты сущностей и игрока
     public int type; // 0 = игрок, 1 = npc, 2 = монстр
     public String name; // Имя объекта или монстра, или npc
     public int speed; // Скорость передвижения игрока по карте
     public int maxLife; // Максимальное кол-во здоровья у монстра или игрока
     public int life; // Текущее кол-во здоровья
+    public int level;
+    public int strength;
+    public int attack;
+    public int defence;
+    public int exp;
+    public int nextLevelExp;
+    public int coin;
+    public Entity currentWeapon;
+    public Entity currentShield;
+
+    // Атрибуты предметов
+    public int attackValue;
+    public int defenceValue;
 
     public Entity(GamePanel gp) {
         this.gp = gp;

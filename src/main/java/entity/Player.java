@@ -1,5 +1,7 @@
 package entity;
 
+import object.NormalSword;
+import object.WoodenShield;
 import org.game.GamePanel;
 import org.game.KeyHandler;
 
@@ -54,8 +56,25 @@ public class Player extends Entity{
         direction = "straight";
 
         // Статус игрока
+        level = 1;
         maxLife = 6; // 1 жизнь = 1 половина сердечка на экране
         life = maxLife;
+        strength = 1;
+        exp = 0;
+        nextLevelExp = 5;
+        coin = 0;
+        currentWeapon = new NormalSword(gp);
+        currentShield = new WoodenShield(gp);
+        attack = getAttack();
+        defence = getDefence();
+    }
+
+    public int getAttack() {
+        return attack = strength * currentWeapon.attackValue;
+    }
+
+    public int getDefence() {
+        return defence = strength * currentShield.defenceValue;
     }
 
     /**

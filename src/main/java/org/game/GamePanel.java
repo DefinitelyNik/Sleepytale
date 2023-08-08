@@ -55,12 +55,13 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity[] monster = new Entity[20]; // Количество одновременно отображаемых в игре монстров
     ArrayList<Entity> entityList = new ArrayList<>();
 
-    // Состояние игры(пауза и т.д.)
+    // Состояния игры(пауза и т.д.)
     public int gameState;
     public final int titleState = 0; // загрузочный экран
     public final int playState = 1; // игровой процесс
     public final int pauseState = 2; // пауза
     public final int dialogueState = 3; // диалоги
+    public final int characterState = 4; // статы главного героя
 
 
     public GamePanel() {
