@@ -91,6 +91,7 @@ public class EventHandler {
     /**
      * Метод, который по своей сути является ивентом, пополняющим очки здоровья игрока.
      * Игрок должен подойти к определенной плитке, нажать на кнопку, после чего его здоровье станет максимальным.
+     * Также этот ивент респавнит монстров.
      */
     public void healingPool(int col, int row, int gameState) {
         if(gp.keyH.ePressed) {
@@ -98,6 +99,7 @@ public class EventHandler {
             gp.player.attackCanceled = true;
             gp.ui.currentDialogue = "You drink the water. You've gained some hp!";
             gp.player.life = gp.player.maxLife;
+            gp.aSetter.setMonster();
         }
     }
 }
