@@ -1,5 +1,6 @@
 package entity;
 
+import object.Key;
 import object.NormalSword;
 import object.WoodenShield;
 import org.game.GamePanel;
@@ -7,6 +8,7 @@ import org.game.KeyHandler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
  * Класс игрока.
@@ -23,6 +25,8 @@ public class Player extends Entity{
     int hasKey = 0;
     private long startTime = 0;
     public boolean attackCanceled = false;
+    public ArrayList<Entity> inventory = new ArrayList<>();
+    public final int maxInventorySize = 20;
 
     public Player(GamePanel gp, KeyHandler keyH) {
 
@@ -43,6 +47,7 @@ public class Player extends Entity{
         setDefaultValues();
         getPlayerImage();
         getPlayerAttackImage();
+        setItems();
     }
 
 
@@ -67,6 +72,12 @@ public class Player extends Entity{
         currentShield = new WoodenShield(gp);
         attack = getAttack();
         defence = getDefence();
+    }
+
+    public void setItems() {
+        inventory.add(currentWeapon);
+        inventory.add(currentShield);
+        inventory.add(new Key(gp));
     }
 
     public int getAttack() {

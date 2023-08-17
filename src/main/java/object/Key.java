@@ -17,5 +17,6 @@ public class Key extends Entity {
 
         name = "Key";
         down1 = setup("/objects/key", gp.tileSize, gp.tileSize);
+        description = "[" + name + "]\nGolden key!.. \nDon't tell anybody it's made of \nbrass..";
     }
 }

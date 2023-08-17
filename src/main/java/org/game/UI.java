@@ -25,6 +25,9 @@ public class UI {
     public String currentDialogue = "";
     public int commandNum = 0;
     public int titleScreenState = 0; // 0: первый страница загрузочного экрана 1: вторая страница и т.д.
+    public int slotCol = 0;
+    public int slotRow = 0;
+
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -83,6 +86,7 @@ public class UI {
         // Состояние показа статов гг
         if(gp.gameState == gp.characterState) {
             drawCharacterScreen();
+            drawInventory();
         }
     }
 
@@ -372,6 +376,71 @@ public class UI {
        g2.drawImage(gp.player.currentWeapon.down1, tailX - gp.tileSize, textY - 40, null);
        textY += gp.tileSize;
        g2.drawImage(gp.player.currentShield.down1, tailX - gp.tileSize, textY - 40, null);
+    }
+
+    public void drawInventory() {
+
+        // отрисовка окна инвентаря
+        int frameX = gp.tileSize * 9;
+        int frameY = gp.tileSize;
+        int frameWidth = gp.tileSize * 6;
+        int frameHeight = gp.tileSize * 5;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        // отрисовка слота
+        final int slotXstart = frameX + 20;
+        final int slotYstart = frameY + 20;
+        int slotX = slotXstart;
+        int slotY = slotYstart;
+        int slotSize = gp.tileSize+5;
+
+        // отрисовка предметов игрока
+        for(int i = 0; i < gp.player.inventory.size(); i++) {
+            g2.drawImage(gp.player.inventory.get(i).down1, slotX, slotY, null);
+            slotX += slotSize;
+
+            if(i == 4 || i == 9 || i == 14) {
+                slotX = slotXstart;
+                slotY += slotSize;
+            }
+        }
+
+        // курсор
+        int cursorX = slotXstart + (slotSize * slotCol);
+        int cursorY = slotYstart + (slotSize * slotRow);
+        int cursorWidth = gp.tileSize;
+        int cursorHeight = gp.tileSize;
+
+        // отрисовка курсора
+        g2.setColor(Color.white);
+        g2.setStroke(new BasicStroke(5));
+        g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
+
+        // отрисовка окна описания предмета
+        int descFrameX = frameX;
+        int descFrameY = frameY + frameHeight;
+        int descFrameWidth = frameWidth;
+        int descFrameHeight = gp.tileSize * 3;
+        drawSubWindow(descFrameX, descFrameY, descFrameWidth, descFrameHeight);
+
+        // отрисовка текста описания предмета
+        int textX = descFrameX + 20;
+        int textY = descFrameY + gp.tileSize/2 + 10;
+        g2.setFont(g2.getFont().deriveFont(28F));
+
+        int itemIndex = getItemIndexOnSlot();
+
+        if(itemIndex < gp.player.inventory.size()) {
+            for(String line: gp.player.inventory.get(itemIndex).description.split("\n")) {
+                g2.drawString(line, textX, textY);
+                textY += 32;
+            }
+        }
+    }
+
+    public int getItemIndexOnSlot() {
+        int itemIndex = slotCol + (slotRow*5);
+        return itemIndex;
     }
 
     /**
