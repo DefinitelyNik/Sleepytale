@@ -421,7 +421,6 @@ public class UI {
         int descFrameY = frameY + frameHeight;
         int descFrameWidth = frameWidth;
         int descFrameHeight = gp.tileSize * 3;
-        drawSubWindow(descFrameX, descFrameY, descFrameWidth, descFrameHeight);
 
         // отрисовка текста описания предмета
         int textX = descFrameX + 20;
@@ -431,6 +430,9 @@ public class UI {
         int itemIndex = getItemIndexOnSlot();
 
         if(itemIndex < gp.player.inventory.size()) {
+
+            drawSubWindow(descFrameX, descFrameY, descFrameWidth, descFrameHeight);
+
             for(String line: gp.player.inventory.get(itemIndex).description.split("\n")) {
                 g2.drawString(line, textX, textY);
                 textY += 32;
